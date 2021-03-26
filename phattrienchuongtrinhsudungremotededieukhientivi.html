@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p id="tv"></p>
+<script>
+    let Remote = function (code){
+        this.code = code
+        this.changechanelrm = function (i,tv){
+            tv.changchanel(i)
+
+        }
+        this.changevolumnrm = function (upordown,number,tv){
+            tv.changevolumn(upordown,number)
+        }
+        this.changetvstate = function (button,tv,id){
+            if (button =="on"){
+                tv.turnOn()
+            }else {
+                tv.turnOff()
+            }
+            tv.state(id)
+        }
+    }
+    let TiVi = function (chanel,volumn,status){
+        this.chanel = chanel
+        this.volumn = volumn
+        this.status = status
+        this.changchanel = function (i){
+            this.chanel = chanels[i]
+        }
+        this.changevolumn = function (upordown,number){
+            if (upordown == "+"){
+                this.volumn=this.volumn+number
+            }else {
+                this.volumn=this.volumn-number
+            }
+        }
+        this.turnOn = function (){
+            return this.status=true
+        }
+        this.turnOff = function (){
+            return this.status=false
+        }
+        this.state = function (id){
+            if (this.status){
+                id.innerHTML = "Volumn:"+this.volumn+"&nbsp"+"Chanel:"+this.chanel
+            }else{
+                id.innerHTML = "TV is off"
+            }
+        }
+    }
+    let tvid= document.getElementById("tv")
+    let chanels = ["kênh 1","kênh 2","kênh 3","kênh 4","kênh 5","kênh 6","kênh 7"]
+    let remote = new Remote(1456)
+    let tivi = new TiVi("kênh 7", 50, true)
+    remote.changechanelrm(2,tivi)
+    tivi.changevolumn("+",2)
+    tivi.state(tvid)
+    remote.changetvstate("off",tivi,tvid)
+    remote.changetvstate("on",tivi,tvid)
+</script>
+</body>
+</html>
